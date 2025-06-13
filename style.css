@@ -6,3 +6,41 @@
     border-bottom: 2px solid #007bff;
     color:#007bff;
 }
+
+.menu{
+    position: absolute;
+    top:100%;
+    left:0;
+    background-color: #fff;
+    box-shadow : 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 10;
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+.menu > li {
+    cursor:pointer;
+   padding : 0.5em 1em;
+}
+
+.menu > li:hover,
+.menu > li:focus {
+    background-color: #eee;/**/
+}
+
+.hidden {
+    display: none;
+}
+
+.tooltip {
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    margin-left: 10px;
+    bottom:125%;  
+    left:5%;
+    white-space: 'nowrap';
+    z-index:20;
+}

@@ -1,0 +1,85 @@
+<section>
+    <header>
+            <h2>Partie 3 – Interface Utilisateur Interactive</h1>
+        </header>
+        <section id="contenu"></section>
+        <script>
+            {
+        let section = document.querySelector('#contenu');
+
+        //TP 3.1 – Onglets 
+        let h3 = document.createElement('h3');
+        h3.textContent = 'TP 3.1 – Onglets';
+        section.appendChild(h3);
+        let h4 = document.createElement('h4'); 
+        h4.innerHTML = `Créez 3 onglets (HTML + CSS).<br/>
+            En JS :<br/>- Activez l'onglet cliqué <br/>- Masquez/affichez dynamiquement le contenu. `;
+        section.appendChild(h4);
+        let p = document.createElement('p'); 
+        p.innerHTML = '↑ voir plus haut';
+        section.appendChild(p);
+
+        //TP 3.2 – Menus déroulants & Tooltips
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 3.2 – Menus déroulants & Tooltips';
+        section.appendChild(h3);
+        h4 = document.createElement('h4'); 
+        h4.innerHTML = `Ajoutez un bouton avec menu déroulant (&lt;ul class="menu"&gt;) :<br/>
+            <br/>- Montrez/cachez au clic. <br/>- Fermez automatiquement si clic à l’extérieur. <br/>- Ajoutez un tooltip simple qui apparaît au survol.`;
+        section.appendChild(h4);
+
+            // Création du bouton et du menu déroulant
+            let dropdownContainer = document.createElement('div');
+            dropdownContainer.style.position = 'relative';
+            let dropdownBtn = document.createElement('button');
+            dropdownBtn.textContent = 'Menu déroulant';
+            let menu = document.createElement('ul');
+            menu.className = 'menu hidden';
+            ['Option 1', 'Option 2', 'Option 3'].forEach(txt => {
+                let li = document.createElement('li');
+                li.textContent = txt;
+                menu.appendChild(li);
+            });
+            //Montrez/cachez au clic.
+            dropdownBtn.addEventListener('click', (e) => {
+                const isVisible = !menu.classList.contains('hidden');
+                menu.classList.toggle('hidden');
+                dropdownBtn.setAttribute('aria-expanded', String(!isVisible));
+            });
+
+            // Fermer le menu si clic à l'extérieur
+            section.addEventListener('click', () => {
+                if (event.target !== dropdownBtn && !menu.contains(event.target)) {
+                    menu.classList.add('hidden');/**/
+            }});
+            dropdownContainer.appendChild(dropdownBtn);
+            dropdownContainer.appendChild(menu);
+
+            // Ajoutez un tooltip simple qui apparaît au survol.
+            let tooltip = document.createElement('span');  
+            tooltip.className = 'tooltip hidden';
+             tooltip.textContent = 'Ceci est un tooltip !';
+            dropdownContainer.appendChild(tooltip);
+            dropdownContainer.addEventListener('mouseover', () => {
+                tooltip.classList.remove('hidden');
+            });
+
+            dropdownContainer.addEventListener('mouseout', () => {
+                tooltip.classList.add('hidden');
+            });
+            section.appendChild(dropdownContainer);
+
+        //TP 3.2 – Menus déroulants & Tooltips
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 3.2 – Menus déroulants & Tooltips';
+        section.appendChild(h3);
+        h4 = document.createElement('h4'); 
+        h4.innerHTML = `Ajoutez un bouton avec menu déroulant (&lt;ul class="menu"&gt;) :<br/>
+            <br/>- Montrez/cachez au clic. <br/>- Fermez automatiquement si clic à l’extérieur. <br/>- Ajoutez un tooltip simple qui apparaît au survol.`;
+        section.appendChild(h4);
+      
+
+        }
+        </script>
+
+</section>
