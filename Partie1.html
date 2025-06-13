@@ -1,0 +1,96 @@
+<section>
+        <header>
+            <h2>Partie 1 – DOM Avancé et Manipulation Dynamique </h1>
+        </header>
+        <section id="contenu"></section>
+    <script>
+        {
+        const section = document.querySelector('#contenu');
+        let fragment1 = document.createDocumentFragment();
+        
+        //TP 1.1 – Explorer et manipuler le DOM
+        let h3 = document.createElement('h3');
+        h3.textContent = 'TP 1.1 – Explorer et manipuler le DOM';
+        section.appendChild(h3);
+
+            // Création d'un div initial
+            let h4 = document.createElement('h4');
+            h4.textContent = '- Utilisation de AppendChild pour ajouter le div initial:';
+            section.appendChild(h4);
+            const initialDiv = document.createElement('div');
+            initialDiv.textContent = 'Div initial';
+            section.appendChild(initialDiv);
+            if (section.contains(initialDiv)) 
+                console.log('La page contient le div initial');
+            
+            // Création d'un nouveau div pour remplacement
+            h4 = document.createElement('h4');
+            h4.textContent = `- Utilisation de replaceChild pour remplace le vieux div par le nouveau div:`;
+            section.appendChild(h4);
+            const oldDiv = document.createElement('div');
+            oldDiv.textContent = 'Div à remplacer';
+            section.appendChild(oldDiv);
+            const newDiv = document.createElement('div');
+            newDiv.textContent = 'Div remplacé';
+            section.replaceChild(newDiv, oldDiv);
+            if (section.contains(newDiv)) 
+                console.log('Le div à remplacer a été remplacé par le nouveau div');
+            
+            
+            // Suppression du div initial
+            h4 = document.createElement('h4');
+            h4.textContent = `- Utilisation de removeChild pour enlevé un div:`;
+            section.appendChild(h4);
+            section.appendChild(oldDiv);
+            section.removeChild(oldDiv);
+            if (!section.contains(oldDiv)) {
+                console.log('Le div a été supprimé du fragment');
+                const p = document.createElement('p');
+                p.textContent = 'Le div a été supprimé du DOM.';
+                section.appendChild(p);
+            }
+            
+            // Insertion de 1000 divs dans un fragment
+            fragment1 = document.createDocumentFragment();
+            h4 = document.createElement('h4');
+            h4.textContent = `- Insertion de 1000 divs dans un fragment:`;
+            section.appendChild(h4);
+            console.time('Insertion de 1000 divs');
+            for (let i = 0; i < 1000; i++) {
+                const div = document.createElement('div');
+                div.textContent = `Div ${i + 1}`;
+                fragment1.appendChild(div);
+            }
+            console.timeEnd('Insertion de 1000 divs');
+            const tempsDiv = document.createElement('div');
+            tempsDiv.textContent = `Temps d'insertion mesuré (voir la console pour la valeur exacte).`;
+            section.appendChild(tempsDiv);
+
+        //TP 1.2 – Délégation d’événements
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 1.2 – Délégation d’événements';
+        h4 = document.createElement('h4');
+        h4.textContent = `- Ajoutez une liste avec 20 éléments.  
+            Utilisez addEventListener sur le parent et 
+            affichez un alert() du texte de l'élément cliqué.`;
+        section.appendChild(h3);
+        section.appendChild(h4);
+        fragment1 = document.createDocumentFragment();
+        
+            //Ajoutez une liste avec 20 éléments.
+            const ul = document.createElement('ul');
+            fragment1.appendChild(ul);
+            for (let i = 0; i < 20; i++) {
+                const li = document.createElement('li');
+                li.textContent = `Élément ${i + 1}`;
+                ul.appendChild(li);
+            }
+            section.appendChild(fragment1);
+            //Utilisez addEventListener sur le parent et 
+            //affichez un alert() du texte de l'élément cliqué.
+            document.querySelector('ul').addEventListener('click', (event) => {
+                alert(event.target.textContent)
+            });
+}
+        </script>
+</section>
