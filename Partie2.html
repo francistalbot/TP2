@@ -1,0 +1,91 @@
+<section>
+    <header>
+            <h2>Partie 2 – Programmation JavaScript Moderne</h1>
+        </header>
+        <section id="contenu"></section>
+        <script>
+            {
+        let section = document.querySelector('#contenu');
+        //TP 2.1 – Méthodes avancées des tableaux
+        let h3 = document.createElement('h3');
+        h3.textContent = 'TP 2.1 – Méthodes avancées des tableaux';
+        section.appendChild(h3);
+        let h4 = document.createElement('h4'); 
+         const utilisateurs = [
+            { nom: "alice", age: 33, actif: false },
+            { nom: "bob", age: 25, actif: true },
+            { nom: "carol", age: 40, actif: true }
+        ];
+            afficherUtilisateurs(utilisateurs);
+        h4.textContent = 'À partir d’un tableau d’objets { nom, age, actif }, utilisez :';
+       section.appendChild(h4);
+      
+
+        function afficherUtilisateurs(utilisateurs) {
+                let p = document.createElement('p');
+                p.innerHTML = 'Utilisateurs:';
+                p.appendChild(document.createElement('br'));
+            utilisateurs.forEach(utilisateur => {
+                if(utilisateur.nom)
+                p.innerHTML += `Nom: ${utilisateur.nom}, `;
+                if(utilisateur.age)
+                p.innerHTML += `Âge: ${utilisateur.age}, `;
+                if(utilisateur.actif !== undefined)
+                p.innerHTML += `Actif: ${utilisateur.actif}`;
+                p.appendChild(document.createElement('br'));
+            });
+                section.appendChild(p);
+        } 
+
+            //filter() pour ne garder que les utilisateurs actifs
+            h4 = document.createElement('h4'); 
+            h4.textContent = '- filter() pour ne garder que les utilisateurs actifs.';
+            section.appendChild(h4);
+            afficherUtilisateurs(
+                utilisateurs.filter(utilisateur => utilisateur.actif)
+            )
+            //map() pour créer un tableau de noms. 
+            h4 = document.createElement('h4'); 
+            h4.textContent = '- map() pour créer un tableau de noms.';
+            section.appendChild(h4);
+            let noms = utilisateurs.map(utilisateur => ({ nom: utilisateur.nom }));
+            afficherUtilisateurs(noms);
+
+            //reduce() pour compter le total des utilisateurs.
+            h4 = document.createElement('h4'); 
+            h4.textContent = '- reduce() pour compter le total des utilisateurs.';
+            section.appendChild(h4);
+            let nombreUtilisateurs = utilisateurs.reduce((acc) => acc + 1, 0);
+            let p = document.createElement('p');
+            p.textContent = `Utilisateurs: ${nombreUtilisateurs}`;
+            section.appendChild(p);
+
+        //TP 2.2 – Classes et interaction DOM
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 2.2 – Classes et interaction DOM';
+        section.appendChild(h3);
+        h4 = document.createElement('h4'); 
+        h4.innerHTML = `Créez une classe MonBouton qui :<br/>
+            - Prend un texte et une fonction de callback. <br/>
+            - Crée dynamiquement un &lt;button&gt;. <br/>
+            - Gère un événement click qui appelle la fonction fournie. `;
+        section.appendChild(h4);
+        class MonBouton {
+            constructor(texte, callback) {
+                this.bouton = document.createElement('button');
+                this.bouton.textContent = texte;
+                this.bouton.addEventListener('click', callback);
+            }
+            get element() {
+                return this.bouton;
+            }
+        }
+        // Insérez ce bouton dans le DOM avec appendChild.
+        const monBouton = new MonBouton('Cliquez-moi', () => {
+            alert('Bouton cliqué !');
+        });
+        section.appendChild(monBouton.element);
+        }
+        </script>
+
+</section>
