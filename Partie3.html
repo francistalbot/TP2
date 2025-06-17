@@ -132,7 +132,7 @@
         h4.innerHTML = `<ol><li>Créez une liste de noms. </li>
             <li>Ajoutez une barre de recherche qui filtre en temps réel la liste. </li></ol> `;
         section.appendChild(h4);
-      
+
             // Création de la barre de recherche et de la liste de noms
             let searchInput = document.createElement('input');
             searchInput.type = 'text';
@@ -239,6 +239,71 @@
 
         section.appendChild(carouselContainer);
         
+        // TP 3.5 – Carrousel d’images
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 3.6 – Pagination simple';
+        section.appendChild(h3);
+        h4 = document.createElement('h4'); 
+        h4.innerHTML = `<ol><li>À partir d’un tableau de 100 utilisateurs, affichez 10 par page. </li>
+            <li>Ajoutez des boutons Précédent / Suivant.</li></ol> `;
+        section.appendChild(h4);
+        // Création du tableau de 100 utilisateurs sans Array.from
+        let users = [];
+        for (let i = 1; i <= 100; i++) {
+            users.push('Utilisateur ' + i);
+        }
+        let usersPerPage = 10;
+        let currentPage = 1;
+        let totalPages = 10;
+
+        // Conteneur pour la pagination
+        let paginationContainer = document.createElement('div');
+        paginationContainer.className = 'pagination-container';
+
+        // Liste des utilisateurs affichés
+        let userList = document.createElement('ul');
+        paginationContainer.appendChild(userList);
+
+        // Boutons de pagination
+        let prevBtn = document.createElement('button');
+        prevBtn.textContent = 'Précédent';
+        prevBtn.disabled = true;
+        let nextBtn = document.createElement('button');
+        nextBtn.textContent = 'Suivant';
+
+        paginationContainer.appendChild(prevBtn);
+        paginationContainer.appendChild(nextBtn);
+
+        // Fonction d'affichage
+        function renderUsers(page) {
+            userList.innerHTML = '';
+            let start = (page - 1) * usersPerPage;
+            let end = start + usersPerPage;
+            for (let i = start; i < end && i < users.length; i++) {
+            let li = document.createElement('li');
+            li.textContent = users[i];
+            userList.appendChild(li);
+            }
+            prevBtn.disabled = page === 1;
+            nextBtn.disabled = page === totalPages;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+            currentPage--;
+            renderUsers(currentPage);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+            currentPage++;
+            renderUsers(currentPage);
+            }
+        });
+
+        renderUsers(currentPage);
+        section.appendChild(paginationContainer);
 
         }
         </script>
