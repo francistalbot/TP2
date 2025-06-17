@@ -71,13 +71,174 @@
 
         //TP 3.2 – Menus déroulants & Tooltips
         h3 = document.createElement('h3');
-        h3.textContent = 'TP 3.2 – Menus déroulants & Tooltips';
+        h3.textContent = 'TP 3.3 – Formulaire avec validation';
         section.appendChild(h3);
         h4 = document.createElement('h4'); 
-        h4.innerHTML = `Ajoutez un bouton avec menu déroulant (&lt;ul class="menu"&gt;) :<br/>
-            <br/>- Montrez/cachez au clic. <br/>- Fermez automatiquement si clic à l’extérieur. <br/>- Ajoutez un tooltip simple qui apparaît au survol.`;
+        h4.innerHTML = `Créez un formulaire avec : <br/>
+            <br/>- Email, mot de passe, date de naissance. <br/>- Validation HTML5 (required, pattern) et JS. <br/>- Affichez une confirmation lors de la soumission. `;
+        section.appendChild(h4);
+
+            // Création du formulaire
+            let form = document.createElement('form');
+            form.innerHTML = `
+                <label>Email :
+                    <input type="email" name="email" required>
+                </label><br>
+                <label>Mot de passe :
+                    <input type="password" name="password"  pattern=".{6,}" placeholder="Minimum de 6 caractères" required>
+                </label><br>
+                <label>Date de naissance :
+                    <input type="date" name="date" required>
+                </label><br>
+                <button type="submit">Envoyer</button>
+                <p class="form-message" ></p>
+            `;
+            section.appendChild(form);
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                let email = form.elements['email'].value.trim();
+                let password = form.elements['password'].value;
+                let date = form.elements['date'].value;
+                let message = form.querySelector('.form-message');
+                // Validation JS simple
+                let valid = true;
+                let msg = "";
+                if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+                    valid = false;
+                    message.innerHTML += "Email invalide.<br/>";
+                }
+                if (password.length < 6) {
+                    valid = false;
+                    message.innerHTML += "Mot de passe trop court (6 caractères min).<br/>";
+                }
+                if (!date) {
+                    valid = false;
+                    message.innerHTML += "Date de naissance requise.<br/>";
+                }
+                if (valid) {
+                    message.style.color = "green";
+                    message.innerHTML = "Formulaire soumis avec succès !";
+                    form.reset();
+                } else {
+                    message.style.color = "red";
+                }
+            });
+        //TP 3.4 – Barre de recherche dynamique
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 3.4 – Barre de recherche dynamique';
+        section.appendChild(h3);
+        h4 = document.createElement('h4'); 
+        h4.innerHTML = `<ol><li>Créez une liste de noms. </li>
+            <li>Ajoutez une barre de recherche qui filtre en temps réel la liste. </li></ol> `;
         section.appendChild(h4);
       
+            // Création de la barre de recherche et de la liste de noms
+            let searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Rechercher un nom...';
+            section.appendChild(searchInput);
+
+            let names = ['Alice', 'Bob', 'Charlie', 'David', 'Émilie', 'Fatima', 'Gabriel', 'Hugo', 'Isabelle', 'Jules'];
+            let ul = document.createElement('ul');
+            names.forEach(name => {
+                let li = document.createElement('li');
+                li.textContent = name;
+                ul.appendChild(li);
+            });
+            section.appendChild(ul);
+
+            // Filtrage en temps réel
+            searchInput.addEventListener('input', function() {
+                let filter = searchInput.value.trim().toLowerCase();
+                // Vider la liste
+                ul.innerHTML = '';
+                // Filtrer les noms et réafficher
+                names.filter(name => name.toLowerCase().includes(filter))
+                    .forEach(name => {
+                        let li = document.createElement('li');
+                        li.textContent = name;
+                        ul.appendChild(li);
+                    });
+            });
+
+        // TP 3.5 – Carrousel d’images
+        h3 = document.createElement('h3');
+        h3.textContent = 'TP 3.5 – Carrousel d’images';
+        section.appendChild(h3);
+        h4 = document.createElement('h4'); 
+        h4.innerHTML = `<ol><li>Créez un carrousel avec 4 images visibles une par une. </li>
+            <li>Ajoutez des flèches pour naviguer.  </li>
+            <li>Ajoutez une transition CSS.</li></ol> `;
+        section.appendChild(h4);
+        let carouselContainer = document.createElement('div');
+        carouselContainer.className = 'carousel-container';
+
+        let images = [
+            'https://picsum.photos/id/1015/400/200',
+            'https://picsum.photos/id/1016/400/200',
+            'https://picsum.photos/id/1018/400/200',
+            'https://picsum.photos/id/1020/400/200'
+        ];
+
+        let currentIndex = 0;
+
+        // Flèche gauche
+        let leftArrow = document.createElement('button');
+        leftArrow.textContent = '⟨';
+        leftArrow.className = 'carousel-arrow left';
+        carouselContainer.appendChild(leftArrow);
+
+        // Image
+        images.forEach((name, idx) => {
+            let img = document.createElement('img');
+            img.src = name;
+            img.className = 'carousel-image';
+            img.classList.toggle('active', idx === 0);
+            carouselContainer.appendChild(img);
+        });
+
+        // Flèche droite
+        let rightArrow = document.createElement('button');
+        rightArrow.textContent = '⟩';
+        rightArrow.className = 'carousel-arrow right';
+        carouselContainer.appendChild(rightArrow);
+
+        //Compteur
+        let counter = document.createElement('p');
+        counter.className = 'carousel-counter';
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        carouselContainer.appendChild(counter);
+
+        // Mettre à jour le compteur lors du changement d'image
+        function updateCounter(newIndex) {
+            currentIndex = newIndex;
+            counter.textContent = `${newIndex + 1} / ${images.length}`;
+        }
+
+        // Ajout d'une transition d'opacité lors du changement d'image
+        function fadeToImage(newIndex) {
+            let imgs = carouselContainer.querySelectorAll('.carousel-image');
+            imgs.forEach((img, idx) => {
+                img.classList.remove('active')
+            });
+            updateCounter(newIndex);
+            setTimeout(() => {
+                imgs[currentIndex].classList.add('active');
+            }, 500);
+        }
+        
+        leftArrow.addEventListener('click', () => {
+            let newIndex = (currentIndex - 1 + images.length) % images.length;
+            fadeToImage(newIndex);
+        });
+        rightArrow.addEventListener('click', () => {
+            let newIndex = (currentIndex + 1 + images.length) % images.length;
+            fadeToImage(newIndex);
+        });
+
+        section.appendChild(carouselContainer);
+        
 
         }
         </script>

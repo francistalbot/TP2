@@ -25,7 +25,7 @@
 
 .menu > li:hover,
 .menu > li:focus {
-    background-color: #eee;/**/
+    background-color: #eee;
 }
 
 .hidden {
@@ -43,4 +43,40 @@
     left:5%;
     white-space: 'nowrap';
     z-index:20;
+}
+ .carousel-container {
+    display: flex;
+    position: relative;/**/
+    align-items: center;
+    justify-content: center;
+    height: 220px;
+    }
+    .carousel-container .carousel-arrow {
+        top:-10px;
+        position: relative;
+    }
+        .carousel-container .carousel-arrow.left{
+            left:-190px;
+        }
+        .carousel-container .carousel-arrow.right{
+            right:-220px;
+        }
+    .carousel-container .carousel-counter{
+        position: relative;
+        bottom:-100px;
+        left:-20px;
+
+    }
+ .carousel-image {
+    position: absolute;
+  opacity: 0;
+  top:0;
+  bottom:0;
+  transition: opacity 1s ease;
+  z-index: 1;
+}
+
+.carousel-image.active {
+  opacity: 1;
+  z-index: 2;
 }
